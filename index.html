@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mariya Junaid — Private Site</title>
+<meta name="description" content="A private site. Entry by passphrase.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23F9F1F2'/%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23C98A96' stroke-width='1.4'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-family='Georgia,serif' font-size='11' fill='%234A2434'%3EMJ%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;1,400&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--rose:#F9F1F2;--mulberry:#4A2434;--dusty:#C98A96;--gold:#B98F5A;--ink:#2C1A22;--hair:#E7D6D9}
+*{box-sizing:border-box;margin:0}
+body{background:var(--rose);color:var(--ink);font-family:"Jost",system-ui,sans-serif;min-height:100vh;display:grid;place-items:center;padding:24px;line-height:1.6;
+background-image:radial-gradient(circle at 50% 0%, #fdf8f8 0%, var(--rose) 55%)}
+.gate{max-width:420px;width:100%;text-align:center}
+.gate svg.mono{display:block;margin:0 auto 20px}
+h1{font-family:"Crimson Pro",Georgia,serif;font-weight:500;font-size:2rem;color:var(--mulberry)}
+.sub{margin-top:10px;font-size:.95rem;color:#8a6670;max-width:38ch;margin-left:auto;margin-right:auto}
+form{margin-top:30px;display:grid;gap:12px;text-align:left}
+label{font-size:.9rem;font-weight:500;color:var(--mulberry)}
+input[type=password]{width:100%;padding:13px 14px;border:1.5px solid var(--dusty);border-radius:3px;background:#fff;font:inherit;letter-spacing:.08em}
+input[type=password]:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+button{padding:13px 16px;border:0;border-radius:3px;background:var(--mulberry);color:var(--rose);font:inherit;font-weight:500;cursor:pointer}
+button:hover{background:#3a1b29}
+button[disabled]{opacity:.6;cursor:wait}
+.err{min-height:1.4em;font-size:.9rem;color:#9a4d4d;text-align:center}
+.foot{margin-top:40px;font-size:.82rem;color:#b08f98}
+@media (prefers-reduced-motion:no-preference){
+  .gate{animation:settle .5s ease-out}
+  @keyframes settle{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+<main class="gate">
+  <svg class="mono" width="110" height="110" viewBox="0 0 96 96" role="img" aria-label="MJ monogram">
+    <circle cx="48" cy="48" r="44" fill="none" stroke="#C98A96" stroke-width="1.5"/>
+    <circle cx="48" cy="48" r="38" fill="none" stroke="#B98F5A" stroke-width="1"/>
+    <g fill="#B98F5A"><circle cx="48" cy="6.5" r="2.5"/><circle cx="48" cy="89.5" r="2.5"/><circle cx="6.5" cy="48" r="2.5"/><circle cx="89.5" cy="48" r="2.5"/></g>
+    <text x="48" y="59" text-anchor="middle" font-family="Georgia,serif" font-size="30" fill="#4A2434">MJ</text>
+  </svg>
+  <h1>Mariya Junaid</h1>
+  <p class="sub">This is a private site for family and close friends. Enter the passphrase you were given to come in.</p>
+  <form id="gateForm" action="#" autocomplete="off">
+    <label for="pass">Passphrase</label>
+    <input type="password" id="pass" name="pass" required autocomplete="off" autocapitalize="off" spellcheck="false">
+    <button type="submit" id="unlockBtn">Unlock</button>
+    <p class="err" id="err" role="alert" aria-live="polite"></p>
+  </form>
+  <p class="foot">Encrypted in your browser — nothing you type is sent anywhere.</p>
+</main>
+<script>
+(function(){
+"use strict";
+var VAULT={salt:"gzFksyOG0TOjBx29Aq69Fg==",iv:"PO242/Y68xUiK98R",ct:"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",iterations:310000};
+function fromB64(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a;}
+async function unlock(pass){
+  var enc=new TextEncoder();
+  var keyMaterial=await crypto.subtle.importKey("raw",enc.encode(pass),"PBKDF2",false,["deriveKey"]);
+  var key=await crypto.subtle.deriveKey(
+    {name:"PBKDF2",salt:fromB64(VAULT.salt),iterations:VAULT.iterations,hash:"SHA-256"},
+    keyMaterial,{name:"AES-GCM",length:256},false,["decrypt"]);
+  var plain=await crypto.subtle.decrypt({name:"AES-GCM",iv:fromB64(VAULT.iv)},key,fromB64(VAULT.ct));
+  return new TextDecoder().decode(plain);
+}
+var form=document.getElementById("gateForm"),err=document.getElementById("err"),btn=document.getElementById("unlockBtn"),input=document.getElementById("pass");
+form.addEventListener("submit",function(e){
+  e.preventDefault();
+  err.textContent="";btn.disabled=true;btn.textContent="Unlocking…";
+  unlock(input.value).then(function(html){
+    document.open();document.write(html);document.close();
+  }).catch(function(){
+    btn.disabled=false;btn.textContent="Unlock";
+    err.textContent="That passphrase didn’t open the door. Check it and try again.";
+    input.select();
+  });
+});
+})();
+</script>
+</body>
+</html>
